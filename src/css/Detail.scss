@@ -1,0 +1,63 @@
+@import "Reset.scss";
+
+$메인칼라: red;
+
+.red {
+  color: $메인칼라;
+}
+
+// *** nesting ***
+
+// 이전 CSS
+/*
+div.container h4 {
+  color: blue;
+}
+
+div.container p {
+  color: green;
+}
+*/
+
+// SCSS
+div.container {
+  h4 {
+    color: blue;
+  }
+
+  p {
+    color: green;
+  }
+}
+
+// *** extend ***
+.my-alert{
+  background-color: #eeeeee;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+}
+
+// 같은 css 상속 받아서, 필요한 부분만 수정
+.my-alert-red{
+  @extend .my-alert;
+  background-color: red;
+}
+
+.my-alert p{
+  margin: 0px;
+}
+
+// *** @mixin : 함수를 쓰겠다. 사용시에는 @include ***
+
+@mixin 블랙테마(){
+  background-color: black;
+  color: white;
+}
+
+.my-alert-black {
+  @extend .my-alert;
+  @include 블랙테마();
+}
