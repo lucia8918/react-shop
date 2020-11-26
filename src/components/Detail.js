@@ -98,8 +98,8 @@ function Detail(props) {
           <button
             className="btn btn-danger"
             onClick={() => {
-              let newArray = [...props.stocks];
-              newArray[0]--;
+              let newArray = [...stocks];
+              newArray[shoe.id]--;
               props.stocks변경(newArray);
             }}
           >
