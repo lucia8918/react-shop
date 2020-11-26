@@ -40,4 +40,6 @@
 .background {
     background-image : url(/src/background.jpg);
     background-position : center;
+    color: white;
 }
+

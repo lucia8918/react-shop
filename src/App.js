@@ -10,6 +10,7 @@ import { Link, Route, Switch } from "react-router-dom";
 
 function App() {
   let [shoes, shoes변경] = useState(Data);
+  let [stocks, stocks변경] = useState([10, 11, 12]);
 
   let shoes추가 = (data) => {
     let newArray = [...shoes];
@@ -23,14 +24,14 @@ function App() {
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Shoe mall</Navbar.Brand>
+        <Navbar.Brand href="#home">Shoes mall</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/detail">
+            <Nav.Link as={Link} to="/detail/0">
               Detail
             </Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -54,8 +55,9 @@ function App() {
           <Jumbotron className="background">
             <h1>20% Season OFF</h1>
             <p>
-              This is a simple hero unit, a simple jumbotron-style component for
-              calling extra attention to featured content or information.
+              A Shoes sale is one that offers some sort of savings but only for
+              a short time. A good flash sale creates urgency, hype, and a spike
+              in sales.
             </p>
             <p>
               <Button variant="primary">Learn more</Button>
@@ -65,7 +67,9 @@ function App() {
           <div className="container">
             <div className="row">
               {shoes.map((item) => {
-                return <Product item={item} key={item.id}></Product>;
+                return (
+                  <Product item={item} key={item.id} stocks={stocks}></Product>
+                );
               })}
             </div>
             <button
@@ -88,11 +92,11 @@ function App() {
         </Route>
 
         <Route path="/detail/:id">
-          <Detail shoes={shoes} />
+          <Detail shoes={shoes} stocks={stocks} stocks변경={stocks변경} />
         </Route>
 
         <Route path="/:id">
-          <div>아무거나</div>
+          <div>잘못된 접근 입니다.</div>
         </Route>
       </Switch>
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import "../css/Detail.scss";
+import Stock from "./Stock";
 
 // Life Cycle Hook 옛날에는 이렇게 component 생명 주기 관리.
 // 생성, 재랜더링, 삭제
@@ -62,8 +63,8 @@ function Detail(props) {
         <제목 색상="blue">Detail</제목>
       </박스>
 
-      <input onChange={changeValue} />
-      <button onClick={submitValue}>입력</button>
+      {/*<input onChange={changeValue} />*/}
+      {/*<button onClick={submitValue}>입력</button>*/}
 
       {alert === true ? (
         <div id="my-alert" className="my-alert">
@@ -85,23 +86,33 @@ function Detail(props) {
           <h4 className="pt-5">{shoe.title}</h4>
           <p>{shoe.content}</p>
           <p>{shoe.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <Stock stocks={props.stocks}></Stock>
           <button
             className="btn btn-danger"
+            onClick={() => {
+              let newArray = [...props.stocks];
+              newArray[0]--;
+              props.stocks변경(newArray);
+            }}
+          >
+            주문하기
+          </button>
+          <button
+            className="btn btn-info"
             onClick={() => {
               history.goBack();
             }}
           >
             뒤로가기
           </button>
-          <button
-            className="btn btn-danger"
-            onClick={() => {
-              history.push("/");
-            }}
-          >
-            메인페이지로 이동
-          </button>
+          {/*<button*/}
+          {/*  className="btn btn-danger"*/}
+          {/*  onClick={() => {*/}
+          {/*    history.push("/");*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  메인페이지로 이동*/}
+          {/*</button>*/}
         </div>
       </div>
     </div>
