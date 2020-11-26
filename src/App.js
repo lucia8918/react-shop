@@ -1,9 +1,11 @@
 import "./App.css";
-import React, { useState, Suspense, lazy } from "react";
+import React, { useState } from "react";
 import { Button, Jumbotron, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Data from "./data";
 import Product from "./components/Product";
 import Detail from "./components/Detail";
+import Cart from "./components/Cart";
+
 import axios from "axios";
 import { Link, Route, Switch } from "react-router-dom";
 
@@ -39,7 +41,7 @@ function App() {
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Shoes mall</Navbar.Brand>
+        <Navbar.Brand href="/">Shoes mall</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
@@ -63,7 +65,6 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-
       {/* Switch : 라우터중에 가장 먼저 매칭되는거 선택해주세요.*/}
       <Switch>
         <Route exact path="/">
@@ -113,12 +114,17 @@ function App() {
           </div>
         </Route>
 
-        <StocksContext.Provider value={stocks}>
-          <Route path="/detail/:id">
+        <Route path="/detail/:id">
+          <StocksContext.Provider value={stocks}>
             <Detail shoes={shoes} stocks={stocks} stocks변경={stocks변경} />
-          </Route>
-        </StocksContext.Provider>
-        <Route path="/:id">
+          </StocksContext.Provider>
+        </Route>
+
+        <Route path="/cart">
+          <Cart />
+        </Route>
+
+        <Route path="/*">
           <div>잘못된 접근 입니다.</div>
         </Route>
       </Switch>

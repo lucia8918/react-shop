@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { Nav, Form } from "react-bootstrap";
 import styled from "styled-components";
 import "../css/Detail.scss";
 import Stock from "./Stock";
@@ -8,6 +8,7 @@ import TabContent from "./TabContent";
 
 import { StocksContext } from "../App";
 import { CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
 
 // Life Cycle Hook 옛날에는 이렇게 component 생명 주기 관리.
 // 생성, 재랜더링, 삭제
@@ -35,6 +36,7 @@ function Detail(props) {
   let stocks = useContext(StocksContext);
   let [누른탭, 누른탭변경] = useState(0);
   let [스위치, 스위치변경] = useState(false);
+  let [구매수량, 구매수량변경] = useState(1);
 
   let changeValue = (e) => {
     입력값변경(e.target.value);
@@ -95,12 +97,47 @@ function Detail(props) {
           <p>{shoe.content}</p>
           <p>{shoe.price}</p>
           <Stock stock={stocks[shoe.id]}></Stock>
+
+          <Form>
+            <Form.Group controlId="exampleForm.SelectCustom">
+              <Form.Label>수량 선택: {구매수량}</Form.Label>
+              <Form.Control
+                as="select"
+                custom
+                onChange={(e) => {
+                  구매수량변경(e.target.value);
+                }}
+              >
+                <option selected>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
+
+          {/*>>> context api 사용시*/}
+          {/*<button*/}
+          {/*  className="btn btn-danger"*/}
+          {/*  onClick={() => {*/}
+          {/*    let newArray = [...stocks];*/}
+          {/*    newArray[shoe.id]--;*/}
+          {/*    props.stocks변경(newArray);*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  주문하기*/}
+          {/*</button>*/}
+
+          {/*>>> 리덕스 사용시*/}
           <button
             className="btn btn-danger"
             onClick={() => {
-              let newArray = [...stocks];
-              newArray[shoe.id]--;
-              props.stocks변경(newArray);
+              props.dispatch({
+                type: "항목추가",
+                payload: { id: shoe.id, name: shoe.title, quan: 구매수량 },
+              });
+              history.push("/cart");
             }}
           >
             주문하기
@@ -167,4 +204,10 @@ function Detail(props) {
   );
 }
 
-export default Detail;
+// Redux store에서 데이터를 가져와서, props로 만들어주는 함수
+function state를props화(state) {
+  console.log(state);
+  return { 장바구니state: state.reducer };
+}
+
+export default connect(state를props화)(Detail);
