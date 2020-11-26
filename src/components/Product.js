@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import App from "../App";
+import React, { useContext } from "react";
+import App, { StocksContext } from "../App";
 import { Link } from "react-router-dom";
 
 function Product(props) {
+  let stocks = useContext(StocksContext);
   return (
     <div className="col-md-4">
       <Link to={`/detail/${props.item.id}`}>
@@ -12,6 +13,7 @@ function Product(props) {
       <p>
         {props.item.content} & {props.item.price}원
       </p>
+      <p>재고 : {stocks[props.item.id]}</p>
     </div>
   );
 }

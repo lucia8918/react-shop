@@ -1,12 +1,18 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, Suspense, lazy } from "react";
 import { Button, Jumbotron, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Data from "./data";
 import Product from "./components/Product";
 import Detail from "./components/Detail";
 import axios from "axios";
-
 import { Link, Route, Switch } from "react-router-dom";
+
+//const Product = lazy(() => import("./components/Product"));
+//const Detail = lazy(() => import("./components/Detail"));
+
+// 같은 값을 공유할 범위 context 설정
+// 외부 컴포넌트의 경우 export, import 사용 필요
+export const StocksContext = React.createContext("StocksContext");
 
 function App() {
   let [shoes, shoes변경] = useState(Data);
@@ -65,13 +71,20 @@ function App() {
           </Jumbotron>
 
           <div className="container">
-            <div className="row">
-              {shoes.map((item) => {
-                return (
-                  <Product item={item} key={item.id} stocks={stocks}></Product>
-                );
-              })}
-            </div>
+            {/*공유할 값을 value에 담는다.*/}
+            <StocksContext.Provider value={stocks}>
+              <div className="row">
+                {shoes.map((item) => {
+                  return (
+                    <Product
+                      item={item}
+                      key={item.id}
+                      stocks={stocks}
+                    ></Product>
+                  );
+                })}
+              </div>
+            </StocksContext.Provider>
             <button
               className="btn btn-primary"
               onClick={() => {
@@ -91,10 +104,11 @@ function App() {
           </div>
         </Route>
 
-        <Route path="/detail/:id">
-          <Detail shoes={shoes} stocks={stocks} stocks변경={stocks변경} />
-        </Route>
-
+        <StocksContext.Provider value={stocks}>
+          <Route path="/detail/:id">
+            <Detail shoes={shoes} stocks={stocks} stocks변경={stocks변경} />
+          </Route>
+        </StocksContext.Provider>
         <Route path="/:id">
           <div>잘못된 접근 입니다.</div>
         </Route>
