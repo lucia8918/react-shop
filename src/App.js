@@ -25,6 +25,15 @@ function App() {
       newArray.push(item);
     });
     shoes변경(newArray);
+
+    // 재고도 추가 처리
+    stocks추가();
+  };
+
+  let stocks추가 = () => {
+    let newArray = [...stocks];
+    newArray.push(100);
+    stocks변경(newArray);
   };
 
   return (
