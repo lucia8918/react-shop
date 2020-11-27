@@ -28,9 +28,9 @@ function reducer(state = 장바구니초기값, 액션) {
     let id = 액션.payload.id;
 
     // 이미 장바구니에 존재 하는 상품의 경우
-    let find = copy.find((item) => item.id == id);
-    if (find) {
-      find.quan += Number(액션.payload.quan);
+    let found = copy.findIndex((item) => item.id === id);
+    if (found >= 0) {
+      copy[found].quan += Number(액션.payload.quan);
     } else {
       copy.push(액션.payload);
     }

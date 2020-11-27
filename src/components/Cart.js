@@ -22,7 +22,7 @@ function Cart(props) {
               <td>{item.quan}</td>
               <td>
                 <button
-                  className="btn-light"
+                  variant="primary"
                   onClick={() => {
                     props.dispatch({
                       type: "수량증가",
@@ -33,7 +33,7 @@ function Cart(props) {
                   +
                 </button>
                 <button
-                  className="btn-light"
+                  variant="primary"
                   onClick={() => {
                     props.dispatch({
                       type: "수량감소",
@@ -56,7 +56,7 @@ function Cart(props) {
               props.dispatch({ type: "alert닫기" });
             }}
           >
-            닫기
+            x
           </button>
         </div>
       ) : null}

@@ -1,13 +1,14 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { Button, Jumbotron, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Data from "./data";
 import Product from "./components/Product";
-import Detail from "./components/Detail";
+//import Detail from "./components/Detail";
 import Cart from "./components/Cart";
-
 import axios from "axios";
 import { Link, Route, Switch } from "react-router-dom";
+
+let Detail = lazy(() => import("./components/Detail"));
 
 //const Product = lazy(() => import("./components/Product"));
 //const Detail = lazy(() => import("./components/Detail"));
@@ -116,7 +117,9 @@ function App() {
 
         <Route path="/detail/:id">
           <StocksContext.Provider value={stocks}>
-            <Detail shoes={shoes} stocks={stocks} stocks변경={stocks변경} />
+            <Suspense fallback={<div>로딩 중입니다.</div>}>
+              <Detail shoes={shoes} stocks={stocks} stocks변경={stocks변경} />
+            </Suspense>
           </StocksContext.Provider>
         </Route>
 
