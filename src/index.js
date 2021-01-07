@@ -10,7 +10,7 @@ import { combineReducers, createStore } from "redux";
 let 장바구니alert초기값 = true;
 
 function 장바구니alertReducer(state = 장바구니alert초기값, 액션) {
-  if (액션.type == "alert닫기") {
+  if (액션.type === "alert닫기") {
     state = false;
   }
   return state;
@@ -39,16 +39,16 @@ function reducer(state = 장바구니초기값, 액션) {
   } else if (액션.type === "수량증가") {
     let id = 액션.payload.id;
     let newArray = [...state];
-    newArray.find((item) => item.id == id).quan++;
+    newArray.find((item) => item.id === id).quan++;
 
     return newArray;
   } else if (액션.type === "수량감소") {
     let newArray = [...state];
     let id = 액션.payload.id;
-    let newQuantity = newArray.find((item) => item.id == id).quan;
+    let newQuantity = newArray.find((item) => item.id === id).quan;
 
     if (newQuantity > 0) newQuantity--;
-    newArray.find((item) => item.id == id).quan = newQuantity;
+    newArray.find((item) => item.id === id).quan = newQuantity;
 
     return newArray;
   } else {
